@@ -1,13 +1,12 @@
+import React from 'react';
 import { Box } from 'components/Box';
 import PropTypes from 'prop-types';
-
 import SendIcon from '@mui/icons-material/Send';
-
 import { ButtonStyled } from './Button.styled';
 
 const Button = ({ title, onClick }) => {
   return (
-    <Box display="flex" justifyContent="center">
+    <Box style={{ display: 'flex', justifyContent: 'center' }}>
       <ButtonStyled
         type="button"
         onClick={onClick}
@@ -24,4 +23,5 @@ Button.propTypes = {
   title: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
+
 export default Button;

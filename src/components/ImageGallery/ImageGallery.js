@@ -1,14 +1,15 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-import { ImageGalleryStyled } from './ImageGallery.styled';
+import { ImageGalleryItemStyled } from 'components/ImageGalleryItem/ImageGalleryItem.styled';
+
 import PropTypes from 'prop-types';
 
 const ImageGallery = ({ images }) => {
   return (
-    <ImageGalleryStyled>
+    <ImageGalleryItemStyled>
       {images.map(img => (
         <ImageGalleryItem img={img} key={img.id} />
       ))}
-    </ImageGalleryStyled>
+    </ImageGalleryItemStyled>
   );
 };
 
