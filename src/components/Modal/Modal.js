@@ -6,6 +6,12 @@ import PropTypes from 'prop-types';
 const modalRoot = document.querySelector('#modal-root');
 
 const Modal = ({ src, alt, modalToggle }) => {
+  const handleClick = e => {
+    if (e.target === e.currentTarget) {
+      modalToggle();
+    }
+  };
+
   useEffect(() => {
     const handleEvent = e => {
       if (e.code === 'Escape' || e.target === e.currentTarget) {
@@ -21,9 +27,7 @@ const Modal = ({ src, alt, modalToggle }) => {
   }, [modalToggle]);
 
   return createPortal(
-    <BackdropStyled
-      onClick={e => (e.target === e.currentTarget ? modalToggle() : null)}
-    >
+    <BackdropStyled onClick={handleClick}>
       <ModalStyled>
         <img src={src} alt={alt} loading="lazy" />
       </ModalStyled>

@@ -23,46 +23,32 @@ const App = () => {
     const fetchImages = async () => {
       if (query === '') {
         return;
-      } else {
-        setLoading(true);
-        try {
-          const { totalHits: fetchedTotalHits, hits: fetchedHits } =
-            await APIRequest(query, page);
-          setTotalHits(fetchedTotalHits);
-          setHits(prevHits => [...prevHits, ...fetchedHits]);
-        } catch (error) {
-          console.error('Error fetching images:', error.message);
-          toast.error('Error fetching images', {
-            position: 'top-center',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
-        } finally {
-          setLoading(false);
-        }
+      }
+
+      setLoading(true);
+      try {
+        const { totalHits: fetchedTotalHits, hits: fetchedHits } =
+          await APIRequest(query, page);
+        setTotalHits(fetchedTotalHits);
+        setHits(prevHits => [...prevHits, ...fetchedHits]);
+      } catch (error) {
+        console.error('Error fetching images:', error.message);
+        toast.error('Error fetching images', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchImages();
   }, [query, page]);
-
-  useEffect(() => {
-    if (query === '') {
-      toast('Please enter a request', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  }, [query]);
 
   const updateQuery = newQuery => {
     setQuery(newQuery);

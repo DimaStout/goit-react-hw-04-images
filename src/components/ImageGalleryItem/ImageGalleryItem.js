@@ -2,25 +2,27 @@ import { ImageGalleryItemStyled } from './ImageGalleryItem.styled';
 import { Component } from 'react';
 import Modal from 'components/Modal';
 import PropTypes from 'prop-types';
+
 export class ImageGalleryItem extends Component {
   state = {
     showModal: false,
   };
+
   modalToggle = () =>
     this.setState(({ showModal }) => ({ showModal: !showModal }));
+
   render() {
     const { webformatURL, largeImageURL, tags } = this.props.img;
     const { showModal } = this.state;
+
     return (
-      <div>
-        <ImageGalleryItemStyled>
-          <img
-            src={webformatURL}
-            alt={tags}
-            loading="lazy"
-            onClick={this.modalToggle}
-          />
-        </ImageGalleryItemStyled>
+      <ImageGalleryItemStyled>
+        <img
+          src={webformatURL}
+          alt={tags}
+          loading="lazy"
+          onClick={this.modalToggle}
+        />
         {showModal && (
           <Modal
             src={largeImageURL}
@@ -28,10 +30,11 @@ export class ImageGalleryItem extends Component {
             modalToggle={this.modalToggle}
           />
         )}
-      </div>
+      </ImageGalleryItemStyled>
     );
   }
 }
+
 ImageGalleryItem.propTypes = {
   img: PropTypes.shape({
     webformatURL: PropTypes.string.isRequired,
