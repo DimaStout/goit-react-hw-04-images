@@ -1,44 +1,54 @@
+import { useState, useEffect } from 'react';
 import { ImageGalleryItemStyled } from './ImageGalleryItem.styled';
-import { Component } from 'react';
 import Modal from 'components/Modal';
 import PropTypes from 'prop-types';
 
-export class ImageGalleryItem extends Component {
-  state = {
-    showModal: false,
+export const ImageGalleryItem = ({ img }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const modalToggle = () => {
+    setShowModal(prevShowModal => !prevShowModal);
   };
 
-  modalToggle = () =>
-    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.code === 'Escape') {
+        setShowModal(false);
+      }
+    };
 
-  render() {
-    const { webformatURL, largeImageURL, tags } = this.props.img;
-    const { showModal } = this.state;
+    window.addEventListener('keydown', handleKeyDown);
 
-    return (
-      <ImageGalleryItemStyled>
-        <img
-          src={webformatURL}
-          alt={tags}
-          loading="lazy"
-          onClick={this.modalToggle}
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  return (
+    <ImageGalleryItemStyled>
+      <img
+        src={img.webformatURL}
+        alt={img.tags}
+        loading="lazy"
+        onClick={modalToggle}
+      />
+      {showModal && (
+        <Modal
+          src={img.largeImageURL}
+          alt={img.tags}
+          modalToggle={modalToggle}
         />
-        {showModal && (
-          <Modal
-            src={largeImageURL}
-            alt={tags}
-            modalToggle={this.modalToggle}
-          />
-        )}
-      </ImageGalleryItemStyled>
-    );
-  }
-}
+      )}
+    </ImageGalleryItemStyled>
+  );
+};
 
 ImageGalleryItem.propTypes = {
   img: PropTypes.shape({
     webformatURL: PropTypes.string.isRequired,
     largeImageURL: PropTypes.string.isRequired,
     tags: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
 };
+
+export default ImageGalleryItem;
