@@ -1,29 +1,13 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ImageGalleryItemStyled } from './ImageGalleryItem.styled';
 import Modal from 'components/Modal';
 import PropTypes from 'prop-types';
 
 export const ImageGalleryItem = ({ img }) => {
   const [showModal, setShowModal] = useState(false);
-
   const modalToggle = () => {
     setShowModal(prevShowModal => !prevShowModal);
   };
-
-  useEffect(() => {
-    const handleKeyDown = e => {
-      if (e.code === 'Escape') {
-        setShowModal(false);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
-
   return (
     <ImageGalleryItemStyled>
       <img
